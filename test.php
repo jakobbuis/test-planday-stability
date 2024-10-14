@@ -25,6 +25,7 @@ $accessToken = $data->access_token;
 for ($i=0; $i < 10000; $i++) {
     $guzzle = new \GuzzleHttp\Client();
     try {
+        $start = hrtime(true);
         $guzzle->get('https://openapi.planday.com/hr/v1/employees/deactivated', [
             'query' => [
                 'offset' => 0,
@@ -36,7 +37,9 @@ for ($i=0; $i < 10000; $i++) {
                 'Accept' => 'application/json',
             ],
         ]);
-        fwrite($file, "Request $i successful " . (new DateTime())->format(DateTime::ATOM) . PHP_EOL);
+        $stop = hrtime(true);
+        $duration = round(($stop - $start) / 1e9, 4);
+        fwrite($file, "Request $i successful " . (new DateTime())->format(DateTime::ATOM) . " ({$duration} seconds)" . PHP_EOL);
     } catch (\GuzzleHttp\Exception\BadResponseException $e) {
         fwrite($file, "Request $i failed " . (new DateTime())->format(DateTime::ATOM) . PHP_EOL);
         if ($e->getResponse()->getBody()) {
