@@ -5,7 +5,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 // Setup the output file
-$file = fopen(__DIR__ . '/log.txt', 'w');
+$file = fopen(__DIR__ . '/log.txt', 'a');
 
 // Get access token
 $clientId = $_ENV['CLIENT_ID'];
