@@ -42,8 +42,12 @@ for ($i=0; $i < 10000; $i++) {
         fwrite($file, "Request $i successful " . (new DateTime())->format(DateTime::ATOM) . " ({$duration} seconds)" . PHP_EOL);
     } catch (\GuzzleHttp\Exception\RequestException $e) {
         fwrite($file, "Request $i failed " . (new DateTime())->format(DateTime::ATOM) . PHP_EOL);
-        if ($e->getResponse()->getBody()) {
-            fwrite($file, $e->getResponse()->getBody()->getContents() . PHP_EOL);
+        fwrite($file, 'Exception: ' . $e->getMessage() . PHP_EOL);
+        if ($e->getResponse()) {
+            $statusCode = $e?->getResponse()?->getStatusCode();
+            $body = $e?->getResponse()?->getBody()?->getContents();
+            fwrite($file, "Statuscode: {$statusCode}" . PHP_EOL);
+            fwrite($file, "Response body: {$body}" . PHP_EOL);
         }
     }
 }
