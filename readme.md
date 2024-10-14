@@ -8,7 +8,7 @@ Runs a failing request 10.000 times to validate the findings.
 
 ## Usage
 ```bash
-php.test.php
+php test.php
 ```
 
 Output is logged to log.txt in the same directory.
