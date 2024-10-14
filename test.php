@@ -40,7 +40,7 @@ for ($i=0; $i < 10000; $i++) {
         $stop = hrtime(true);
         $duration = round(($stop - $start) / 1e9, 4);
         fwrite($file, "Request $i successful " . (new DateTime())->format(DateTime::ATOM) . " ({$duration} seconds)" . PHP_EOL);
-    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
         fwrite($file, "Request $i failed " . (new DateTime())->format(DateTime::ATOM) . PHP_EOL);
         if ($e->getResponse()->getBody()) {
             fwrite($file, $e->getResponse()->getBody()->getContents() . PHP_EOL);
